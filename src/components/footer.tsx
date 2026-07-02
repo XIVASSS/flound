@@ -48,10 +48,7 @@ export function Footer() {
     <footer id="contact" className="px-3 pb-3 sm:px-4 sm:pb-4">
       <div className="relative overflow-hidden rounded-[28px] bg-neutral-950 text-white sm:rounded-[36px]">
         <div className="px-8 pt-14 sm:px-14 sm:pt-20">
-          <div className="flex h-9 w-9 items-center justify-center rounded-lg bg-white/10 text-sm font-bold">
-            f
-          </div>
-          <h2 className="mt-6 max-w-xl text-3xl leading-tight font-semibold tracking-tight sm:text-4xl">
+          <h2 className="max-w-xl text-3xl leading-tight font-semibold tracking-tight sm:text-4xl">
             {f.headline}
           </h2>
           <a
