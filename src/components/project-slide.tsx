@@ -133,17 +133,21 @@ export function ProjectSlide({ project, index }: ProjectSlideProps) {
                 variant="screen"
                 className="w-full max-w-[min(90%,560px)] shrink-0 rounded-[1.75rem] p-2 sm:rounded-[2rem] sm:p-2.5"
               >
-                <Link
-                  href={`/projects/${project.slug}`}
-                  className="relative block aspect-[16/11] w-full overflow-hidden rounded-[1.35rem] bg-white/95 shadow-[inset_0_1px_0_rgba(0,0,0,0.04)] sm:rounded-[1.5rem]"
-                >
-                  {showModel ? (
+                {showModel ? (
+                  <div className="relative block aspect-[16/11] w-full overflow-hidden rounded-[1.35rem] bg-white/95 shadow-[inset_0_1px_0_rgba(0,0,0,0.04)] sm:rounded-[1.5rem]">
                     <StlModelViewer
                       url={project.model!.src}
                       color={project.model!.color}
                       scale={project.model!.scale}
                     />
-                  ) : (
+                  </div>
+                ) : (
+                  <Link
+                    href={`/projects/${project.slug}`}
+                    draggable={false}
+                    onDragStart={(event) => event.preventDefault()}
+                    className="relative block aspect-[16/11] w-full overflow-hidden rounded-[1.35rem] bg-white/95 shadow-[inset_0_1px_0_rgba(0,0,0,0.04)] sm:rounded-[1.5rem]"
+                  >
                     <Image
                       src={
                         project.images[previewImageIndex]?.src ??
@@ -152,6 +156,7 @@ export function ProjectSlide({ project, index }: ProjectSlideProps) {
                       alt={project.title}
                       fill
                       sizes="(max-width: 768px) 80vw, 520px"
+                      draggable={false}
                       className={
                         project.previewFit === "contain"
                           ? "object-contain p-5 sm:p-7"
@@ -159,8 +164,8 @@ export function ProjectSlide({ project, index }: ProjectSlideProps) {
                       }
                       priority={index === 0}
                     />
-                  )}
-                </Link>
+                  </Link>
+                )}
               </GlassPanel>
 
               <GlassPanel

@@ -69,12 +69,22 @@ export function StlModelViewer({
   showHint = true,
 }: StlModelViewerProps) {
   return (
-    <div className={`relative h-full w-full ${className}`}>
+    <div
+      className={`relative h-full w-full cursor-grab select-none touch-none active:cursor-grabbing ${className}`}
+      onDragStart={(event) => event.preventDefault()}
+      onPointerDown={(event) => event.stopPropagation()}
+    >
       <Canvas
         camera={{ position: [0, 0, 5], fov: 36 }}
         gl={{ antialias: true, alpha: true }}
         dpr={[1, 2]}
-        style={{ background: "transparent" }}
+        style={{ background: "transparent", touchAction: "none" }}
+        onCreated={({ gl }) => {
+          const canvas = gl.domElement;
+          canvas.draggable = false;
+          canvas.style.userSelect = "none";
+          canvas.addEventListener("dragstart", (event) => event.preventDefault());
+        }}
       >
         <ambientLight intensity={0.6} />
         <directionalLight position={[5, 8, 6]} intensity={1.2} />
