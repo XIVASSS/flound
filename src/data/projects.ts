@@ -1,6 +1,12 @@
 export type ProjectImage = {
   src: string;
   alt: string;
+  /** Dark stills stay on a black stage so they don't wash out */
+  tone?: "light" | "dark";
+  /** App UI is shown inside the iPhone frame so the screen fills the device */
+  frame?: "phone";
+  /** Cover fills the preview frame; contain keeps the whole image visible */
+  fit?: "cover" | "contain";
 };
 
 export type ProjectModel = {
@@ -149,10 +155,6 @@ export const projects: Project[] = [
         src: "/assets/poplight/poplight-sconce.png",
         alt: "Poplight wall sconce product render",
       },
-      {
-        src: "/assets/poplight/poplight-lifestyle.png",
-        alt: "Poplight lifestyle workspace scene",
-      },
     ],
   },
   {
@@ -161,7 +163,7 @@ export const projects: Project[] = [
     description:
       "Pocket spirometer with a companion app for respiratory health. BLE device pairing, live session tracking with pressure rings, and a full session history dashboard.",
     tags: ["Health", "BLE", "iOS", "Hardware"],
-    thumbnail: "/assets/spira/spira-device.png",
+    thumbnail: "/assets/spira/spira-render.png",
     readTime: "14 mins read",
     headline: "A pocket spirometer that makes lungs measurable.",
     headlineSegments: [
@@ -237,12 +239,15 @@ export const projects: Project[] = [
     },
     images: [
       {
-        src: "/assets/spira/spira-device.png",
+        src: "/assets/spira/spira-render.png",
         alt: "Spira pocket spirometer device render",
+        tone: "dark",
       },
       {
         src: "/assets/spira/spira-app.webp",
         alt: "Spira app — connect, dashboard, and live exercise screens",
+        tone: "dark",
+        fit: "cover",
       },
     ],
   },
@@ -328,22 +333,27 @@ export const projects: Project[] = [
       {
         src: "/assets/cardiogram/cardiogram-home.png",
         alt: "Cardiogram app home screen",
+        frame: "phone",
       },
       {
         src: "/assets/cardiogram/cardiogram-ecg.png",
         alt: "Cardiogram live ECG waveform view",
+        frame: "phone",
       },
       {
         src: "/assets/cardiogram/cardiogram-report.png",
         alt: "Cardiogram session report with AI analysis",
+        frame: "phone",
       },
       {
         src: "/assets/cardiogram/cardiogram-metrics.png",
         alt: "Cardiogram detailed heart rate metrics",
+        frame: "phone",
       },
       {
         src: "/assets/cardiogram/cardiogram-ai.png",
         alt: "Cardiogram ECG Expert AI chat",
+        frame: "phone",
       },
     ],
   },

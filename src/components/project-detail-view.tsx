@@ -1,12 +1,16 @@
 "use client";
 
-import { useState } from "react";
 import dynamic from "next/dynamic";
 import Image from "next/image";
 import Link from "next/link";
 import { Footer } from "@/components/footer";
 import { IPhoneMockup } from "@/components/iphone-mockup";
 import { MenuPill } from "@/components/menu-pill";
+import {
+  ProjectStills,
+  SlideshowDots,
+  useProjectSlideshow,
+} from "@/components/project-slideshow";
 import { GlassPanel } from "@/components/ui/glass-panel";
 import type { Project } from "@/data/projects";
 import { cn } from "@/lib/utils";
@@ -52,19 +56,26 @@ function HeadlineSegments({
 }
 
 export function ProjectDetailView({ project }: ProjectDetailViewProps) {
-  const defaultImageIndex = project.model ? 0 : 0;
-  const [activeImage, setActiveImage] = useState(defaultImageIndex);
+  const slideCount = (project.model ? 1 : 0) + project.images.length;
+  const { index: activeImage, outgoing, select, reduceMotion, setPaused } =
+    useProjectSlideshow(slideCount, !project.model);
   const showModel = Boolean(project.model && activeImage === 0);
   const previewImageIndex = project.model
     ? Math.max(0, activeImage - 1)
     : activeImage;
+  const activeStill = project.images[previewImageIndex];
+  const showPhone = !showModel && activeStill?.frame === "phone";
+  const showDirect =
+    !showModel &&
+    !showPhone &&
+    activeStill?.tone === "dark" &&
+    activeStill.fit !== "cover";
+  const showWide = !showModel && !showPhone && activeStill?.fit === "cover";
 
-  const thumbnails = project.model
-    ? [
-        { type: "model" as const },
-        ...project.images.map((img) => ({ type: "image" as const, img })),
-      ]
-    : project.images.map((img) => ({ type: "image" as const, img }));
+  const slideLabels = [
+    ...(project.model ? [`${project.title} 3D model`] : []),
+    ...project.images.map((img) => img.alt),
+  ];
 
   const activeScreen =
     project.images[previewImageIndex]?.src ?? project.thumbnail;
@@ -150,10 +161,21 @@ export function ProjectDetailView({ project }: ProjectDetailViewProps) {
                 variant="warm"
                 className="relative flex min-h-[360px] flex-col rounded-[2.25rem] sm:min-h-0 sm:rounded-[2.5rem]"
               >
-                <div className="flex h-full flex-col items-center justify-center gap-4 px-6 py-10 sm:gap-5 sm:px-10 sm:py-12 lg:px-12 lg:py-14">
+                <div
+                  className="flex h-full flex-col items-center justify-center gap-4 px-6 py-10 sm:gap-5 sm:px-10 sm:py-12 lg:px-12 lg:py-14"
+                  onMouseEnter={() => {
+                    if (window.matchMedia("(hover: hover)").matches) setPaused(true);
+                  }}
+                  onMouseLeave={() => setPaused(false)}
+                >
                   <GlassPanel
                     variant="screen"
-                    className="w-full max-w-[min(90%,320px)] shrink-0 rounded-[1.75rem] p-3 sm:rounded-[2rem] sm:p-4"
+                    className={cn(
+                      "w-full shrink-0 rounded-[1.75rem] p-3 sm:rounded-[2rem] sm:p-4",
+                      showPhone || showModel
+                        ? "max-w-[min(90%,320px)]"
+                        : "max-w-[min(90%,560px)]",
+                    )}
                   >
                     {showModel ? (
                       <div className="relative aspect-[9/19] w-full overflow-hidden rounded-[1.35rem] bg-white/95 sm:rounded-[1.5rem]">
@@ -164,69 +186,60 @@ export function ProjectDetailView({ project }: ProjectDetailViewProps) {
                           showHint
                         />
                       </div>
-                    ) : (
+                    ) : showPhone ? (
                       <IPhoneMockup
                         screenSrc={activeScreen}
-                        screenAlt={project.title}
+                        screenAlt={activeStill?.alt ?? project.title}
                         className="max-w-none"
                         priority
                       />
+                    ) : showDirect && activeStill ? (
+                      <div className="overflow-hidden rounded-[1.35rem] bg-[#2d2e32] p-4 sm:rounded-[1.5rem] sm:p-5">
+                        <Image
+                          src={activeStill.src}
+                          alt={activeStill.alt}
+                          width={1024}
+                          height={925}
+                          sizes="(max-width: 768px) 80vw, 520px"
+                          className="h-auto w-full"
+                          priority
+                        />
+                      </div>
+                    ) : showWide && activeStill ? (
+                      <div className="relative aspect-video w-full overflow-hidden rounded-[1.35rem] bg-[#2d2e32] sm:rounded-[1.5rem]">
+                        <Image
+                          src={activeStill.src}
+                          alt={activeStill.alt}
+                          fill
+                          sizes="(max-width: 768px) 80vw, 520px"
+                          className="object-cover"
+                          priority
+                        />
+                      </div>
+                    ) : (
+                      <div className="relative aspect-[16/11] w-full overflow-hidden rounded-[1.35rem] bg-white/95 sm:rounded-[1.5rem]">
+                        <ProjectStills
+                          images={project.images}
+                          activeIndex={previewImageIndex}
+                          outgoingIndex={outgoing}
+                          reduceMotion={reduceMotion}
+                          priority
+                          sizes="(max-width: 768px) 80vw, 520px"
+                        />
+                      </div>
                     )}
                   </GlassPanel>
 
-                  {thumbnails.length > 1 && (
+                  {slideLabels.length > 1 && (
                     <GlassPanel
                       variant="pill"
-                      className="flex w-auto max-w-full shrink-0 items-center justify-center rounded-full px-3 py-2 sm:px-4"
+                      className="flex w-auto shrink-0 items-center justify-center rounded-full px-4 py-3"
                     >
-                      <div className="flex items-center gap-1.5 overflow-x-auto sm:gap-2">
-                        {thumbnails.slice(0, 7).map((item, thumbIndex) => {
-                          const isActive = activeImage === thumbIndex;
-
-                          if (item.type === "model") {
-                            return (
-                              <button
-                                key="model"
-                                type="button"
-                                onClick={() => setActiveImage(0)}
-                                className={cn(
-                                  "relative h-8 w-12 shrink-0 overflow-hidden rounded-lg border border-white/50 bg-white/60 transition-all sm:h-9 sm:w-[3rem]",
-                                  isActive
-                                    ? "ring-2 ring-white/90 shadow-md"
-                                    : "opacity-55 hover:opacity-100",
-                                )}
-                                aria-label={`${project.title} 3D model`}
-                              >
-                                <div className="flex h-full w-full items-center justify-center text-[9px] font-semibold text-neutral-600">
-                                  3D
-                                </div>
-                              </button>
-                            );
-                          }
-
-                          return (
-                            <button
-                              key={item.img.src}
-                              type="button"
-                              onClick={() => setActiveImage(thumbIndex)}
-                              className={cn(
-                                "relative h-8 w-12 shrink-0 overflow-hidden rounded-lg border border-white/50 bg-white/80 transition-all sm:h-9 sm:w-[3rem]",
-                                isActive
-                                  ? "ring-2 ring-white/90 shadow-md"
-                                  : "opacity-55 hover:opacity-100",
-                              )}
-                            >
-                              <Image
-                                src={item.img.src}
-                                alt={item.img.alt}
-                                fill
-                                sizes="48px"
-                                className="object-cover"
-                              />
-                            </button>
-                          );
-                        })}
-                      </div>
+                      <SlideshowDots
+                        labels={slideLabels}
+                        index={activeImage}
+                        onSelect={select}
+                      />
                     </GlassPanel>
                   )}
                 </div>
@@ -279,19 +292,43 @@ export function ProjectDetailView({ project }: ProjectDetailViewProps) {
                     variant="light"
                     className="overflow-hidden rounded-[1.75rem] p-3 sm:rounded-[2rem] sm:p-4"
                   >
-                    <div className="relative aspect-[4/3] overflow-hidden rounded-[1.25rem] bg-white sm:rounded-[1.5rem]">
-                      <Image
-                        src={image.src}
-                        alt={image.alt}
-                        fill
-                        sizes="(max-width: 768px) 100vw, 33vw"
-                        className={
-                          project.previewFit === "contain"
-                            ? "object-contain p-4"
-                            : "object-contain object-top p-2"
-                        }
+                    {image.frame === "phone" ? (
+                      <IPhoneMockup
+                        screenSrc={image.src}
+                        screenAlt={image.alt}
+                        className="mx-auto max-w-[240px]"
                       />
-                    </div>
+                    ) : image.tone === "dark" && image.fit !== "cover" ? (
+                      <div className="overflow-hidden rounded-[1.25rem] bg-[#2d2e32] p-3 sm:rounded-[1.5rem] sm:p-4">
+                        <Image
+                          src={image.src}
+                          alt={image.alt}
+                          width={1024}
+                          height={925}
+                          sizes="(max-width: 768px) 100vw, 33vw"
+                          className="h-auto w-full"
+                        />
+                      </div>
+                    ) : (
+                      <div
+                        className={cn(
+                          "relative overflow-hidden rounded-[1.25rem] sm:rounded-[1.5rem]",
+                          image.tone === "dark"
+                            ? "aspect-video bg-[#2d2e32]"
+                            : "aspect-[4/3] bg-white",
+                        )}
+                      >
+                        <Image
+                          src={image.src}
+                          alt={image.alt}
+                          fill
+                          sizes="(max-width: 768px) 100vw, 33vw"
+                          className={
+                            image.fit === "cover" ? "object-cover" : "object-contain"
+                          }
+                        />
+                      </div>
+                    )}
                     <p className="mt-3 px-1 text-sm text-neutral-500">
                       {image.alt}
                     </p>
