@@ -1,7 +1,13 @@
+const email = "protyasishmajumder@gmail.com";
+
+function mailTo(subject: string, body: string) {
+  return `mailto:${email}?subject=${encodeURIComponent(subject)}&body=${encodeURIComponent(body)}`;
+}
+
 export const site = {
   name: "flound",
   tagline: "Apps, hardware & AI",
-  email: "hello@flound.studio",
+  email,
   nav: [
     { label: "Work", href: "#work" },
     { label: "About", href: "#about" },
@@ -126,7 +132,10 @@ export const site = {
   footer: {
     headline: "Let's discuss how we can make your product better!",
     ctaLabel: "Get in touch",
-    ctaHref: "mailto:hello@flound.studio",
+    ctaHref: mailTo(
+      "Would love to connect",
+      "Hi Protyasish,\n\nI would love to connect about a project.\n\n",
+    ),
     wordmark: "flound",
     socials: [
       { label: "Instagram", href: "https://instagram.com", icon: "instagram" },

@@ -31,7 +31,7 @@ export function CTA() {
           <div className="mt-8 flex flex-col items-center justify-center gap-3 sm:flex-row">
             <StarBorder
               as="a"
-              href={`mailto:${site.email}`}
+              href={site.footer.ctaHref}
               speed="5s"
               className="cursor-pointer"
             >

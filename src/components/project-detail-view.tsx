@@ -84,8 +84,8 @@ export function ProjectDetailView({ project }: ProjectDetailViewProps) {
     <>
       <div className="bg-white">
         {/* Hero — same framed card language as project slides */}
-        <section className="min-h-svh p-2.5 sm:p-3">
-          <div className="relative min-h-[calc(100svh-1.25rem)] overflow-hidden rounded-[2.5rem] sm:min-h-[calc(100svh-1.5rem)] sm:rounded-[2.75rem]">
+        <section className="p-2.5 sm:p-3 lg:min-h-svh">
+          <div className="relative overflow-hidden rounded-[1.75rem] sm:rounded-[2.25rem] lg:min-h-[calc(100svh-1.5rem)] lg:rounded-[2.75rem]">
             <div
               className="pointer-events-none absolute inset-0 overflow-hidden rounded-[2.5rem] sm:rounded-[2.75rem]"
               aria-hidden
@@ -109,26 +109,26 @@ export function ProjectDetailView({ project }: ProjectDetailViewProps) {
               Back
             </Link>
 
-            <div className="relative grid min-h-[calc(100svh-1.25rem)] grid-rows-[auto_1fr] gap-[10px] p-[10px] pt-16 sm:min-h-[calc(100svh-1.5rem)] sm:pt-[4.5rem] md:grid-cols-[minmax(0,40fr)_minmax(0,60fr)] md:grid-rows-1 md:pt-[10px]">
+            <div className="relative grid grid-rows-[auto_auto] gap-2 p-2 pt-16 sm:gap-[10px] sm:p-[10px] sm:pt-[4.5rem] lg:min-h-[calc(100svh-1.5rem)] lg:grid-cols-[minmax(0,40fr)_minmax(0,60fr)] lg:grid-rows-1 lg:pt-[10px]">
               {/* Left — info */}
               <GlassPanel
                 variant="light"
-                className="flex min-h-[340px] flex-col overflow-hidden rounded-[2.25rem] sm:rounded-[2.5rem]"
+                className="flex min-h-0 flex-col overflow-hidden rounded-[1.5rem] sm:rounded-[2rem] lg:min-h-[340px] lg:rounded-[2.5rem]"
               >
-                <div className="flex flex-1 flex-col px-8 pt-8 sm:px-10 sm:pt-10 lg:px-11 lg:pt-11">
+                <div className="flex flex-1 flex-col px-5 pt-5 sm:px-8 sm:pt-8 lg:px-11 lg:pt-11">
                   <span
                     className={cn(
-                      "inline-flex w-fit rounded-full px-8 py-3 text-xl font-semibold text-white sm:px-10 sm:py-4 sm:text-2xl",
+                      "inline-flex w-fit rounded-full px-5 py-2 text-base font-semibold text-white sm:px-8 sm:py-3 sm:text-xl lg:px-10 lg:py-4 lg:text-2xl",
                       project.badgeClass,
                     )}
                   >
                     {project.title}
                   </span>
 
-                  <div className="flex flex-1 flex-col justify-center py-10 sm:py-14 lg:py-16">
+                  <div className="flex flex-1 flex-col justify-center py-6 sm:py-10 lg:py-16">
                     <HeadlineSegments
                       segments={project.headlineSegments}
-                      className="max-w-[15rem] text-[1.6rem] leading-[1.18] tracking-tight sm:max-w-[17rem] sm:text-[2rem] lg:max-w-xs lg:text-[2.25rem]"
+                      className="max-w-[18rem] text-[1.35rem] leading-[1.2] tracking-tight sm:max-w-[17rem] sm:text-[1.7rem] lg:max-w-xs lg:text-[2.25rem]"
                     />
                     <div className="mt-5 flex flex-wrap gap-x-5 gap-y-1 text-[13px] text-neutral-400">
                       {project.slideTags.map((tag) => (
@@ -142,7 +142,7 @@ export function ProjectDetailView({ project }: ProjectDetailViewProps) {
                   <GlassPanel
                     variant="inset"
                     className={cn(
-                      "rounded-[1.875rem] p-8 sm:rounded-[2rem] sm:p-10",
+                      "rounded-[1.35rem] p-5 sm:rounded-[1.75rem] sm:p-8 lg:p-10",
                       project.insetClass,
                     )}
                   >
@@ -159,10 +159,10 @@ export function ProjectDetailView({ project }: ProjectDetailViewProps) {
               {/* Right — phone / preview */}
               <GlassPanel
                 variant="warm"
-                className="relative flex min-h-[360px] flex-col rounded-[2.25rem] sm:min-h-0 sm:rounded-[2.5rem]"
+                className="relative flex min-h-[280px] flex-col rounded-[1.5rem] sm:min-h-[360px] sm:rounded-[2rem] lg:min-h-0 lg:rounded-[2.5rem]"
               >
                 <div
-                  className="flex h-full flex-col items-center justify-center gap-4 px-6 py-10 sm:gap-5 sm:px-10 sm:py-12 lg:px-12 lg:py-14"
+                  className="flex h-full flex-col items-center justify-center gap-4 px-4 py-6 sm:gap-5 sm:px-8 sm:py-10 lg:px-12 lg:py-14"
                   onMouseEnter={() => {
                     if (window.matchMedia("(hover: hover)").matches) setPaused(true);
                   }}

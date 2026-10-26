@@ -164,7 +164,7 @@ export function Collage() {
           {/* Fanned cards — bottom-anchored so they don't bleed into About */}
           <div className="absolute inset-x-0 bottom-0 z-10 flex justify-center">
             <div
-              className="relative origin-bottom scale-[0.55] sm:scale-[0.72] md:scale-90 lg:scale-100"
+              className="relative origin-bottom scale-[0.42] min-[420px]:scale-[0.5] sm:scale-[0.72] md:scale-90 lg:scale-100"
               style={{ perspective: 900 }}
             >
               <AnimatedContent distance={40} duration={0.6}>
@@ -182,7 +182,7 @@ export function Collage() {
               </AnimatedContent>
 
               {/* Handle tag */}
-              <div className="absolute -top-2 left-1/2 translate-x-[10.5rem] rounded-full bg-neutral-900 px-3.5 py-1.5 text-xs font-medium whitespace-nowrap text-white sm:translate-x-[12.5rem] sm:px-4 sm:text-sm">
+              <div className="absolute -top-2 left-1/2 translate-x-[6.5rem] rounded-full bg-neutral-900 px-3 py-1 text-[11px] font-medium whitespace-nowrap text-white sm:translate-x-[12.5rem] sm:px-4 sm:text-sm">
                 {c.handle}
               </div>
             </div>

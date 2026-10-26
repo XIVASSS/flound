@@ -55,13 +55,13 @@ export function ProjectSlide({ project, index }: ProjectSlideProps) {
   return (
     <article
       data-project-wrapper
-      className={`relative h-[220svh] ${index > 0 ? "-mt-[100svh]" : ""}`}
+      className={`relative lg:h-[220svh] ${index > 0 ? "lg:-mt-[100svh]" : ""}`}
       style={{ zIndex: index + 1 }}
     >
-      <div className="sticky top-0 h-svh overflow-hidden bg-white p-2.5 sm:p-3">
+      <div className="h-auto overflow-hidden bg-white p-2.5 sm:p-3 lg:sticky lg:top-0 lg:h-svh">
         <div
           data-project-card
-          className="relative h-full origin-top overflow-hidden rounded-[2.5rem] will-change-transform sm:rounded-[2.75rem]"
+          className="relative h-auto origin-top overflow-hidden rounded-[1.75rem] will-change-transform sm:rounded-[2.25rem] lg:h-full lg:rounded-[2.75rem]"
         >
           {/* Full-bleed ambient gradient — scales with card */}
           <div
@@ -77,23 +77,23 @@ export function ProjectSlide({ project, index }: ProjectSlideProps) {
           </div>
 
           {/* Two glass panels on gradient — no solid card shell */}
-          <div className="relative grid h-full grid-rows-[auto_1fr] gap-[10px] p-[10px] md:grid-cols-[minmax(0,40fr)_minmax(0,60fr)] md:grid-rows-1">
+          <div className="relative grid h-auto grid-rows-[auto_auto] gap-2 p-2 sm:gap-[10px] sm:p-[10px] lg:h-full lg:grid-cols-[minmax(0,40fr)_minmax(0,60fr)] lg:grid-rows-1">
           {/* Left — white info card */}
           <GlassPanel
             variant="light"
-            className="flex min-h-[340px] flex-col overflow-hidden rounded-[2.25rem] sm:rounded-[2.5rem]"
+            className="flex min-h-0 flex-col overflow-hidden rounded-[1.5rem] sm:rounded-[2rem] lg:min-h-[340px] lg:rounded-[2.5rem]"
           >
-            <div className="flex flex-1 flex-col px-8 pt-8 sm:px-10 sm:pt-10 lg:px-11 lg:pt-11">
+            <div className="flex flex-1 flex-col px-5 pt-5 sm:px-8 sm:pt-8 lg:px-11 lg:pt-11">
               <div>
                 <span
-                  className={`inline-flex rounded-full px-8 py-3 text-xl font-semibold text-white sm:px-10 sm:py-4 sm:text-2xl ${project.badgeClass}`}
+                  className={`inline-flex rounded-full px-5 py-2 text-base font-semibold text-white sm:px-8 sm:py-3 sm:text-xl lg:px-10 lg:py-4 lg:text-2xl ${project.badgeClass}`}
                 >
                   {project.title}
                 </span>
               </div>
 
-              <div className="flex flex-1 flex-col justify-center py-10 sm:py-14 lg:py-16">
-                <h3 className="max-w-[15rem] text-[1.6rem] leading-[1.18] tracking-tight sm:max-w-[17rem] sm:text-[2rem] lg:max-w-xs lg:text-[2.25rem]">
+              <div className="flex flex-1 flex-col justify-center py-6 sm:py-10 lg:py-16">
+                <h3 className="max-w-[18rem] text-[1.35rem] leading-[1.2] tracking-tight sm:max-w-[17rem] sm:text-[1.7rem] lg:max-w-xs lg:text-[2.25rem]">
                   {project.headlineSegments.map((seg, i) => (
                     <span
                       key={i}
@@ -119,7 +119,7 @@ export function ProjectSlide({ project, index }: ProjectSlideProps) {
               <GlassPanel
                 variant="inset"
                 className={cn(
-                  "flex flex-col gap-8 rounded-[1.875rem] p-8 sm:gap-10 sm:rounded-[2rem] sm:p-10",
+                  "flex flex-col gap-5 rounded-[1.35rem] p-5 sm:gap-8 sm:rounded-[1.75rem] sm:p-8 lg:gap-10 lg:p-10",
                   project.insetClass,
                 )}
               >
@@ -128,7 +128,7 @@ export function ProjectSlide({ project, index }: ProjectSlideProps) {
                 </p>
                 <Link
                   href={`/projects/${project.slug}`}
-                  className="w-fit rounded-full bg-black px-10 py-4 text-lg font-semibold text-white shadow-[0_10px_28px_rgba(0,0,0,0.35)] transition-[transform,box-shadow] hover:scale-[1.02] hover:shadow-[0_14px_32px_rgba(0,0,0,0.42)] sm:px-12 sm:py-[1.125rem] sm:text-xl"
+                  className="w-fit rounded-full bg-black px-6 py-3 text-base font-semibold text-white shadow-[0_10px_28px_rgba(0,0,0,0.35)] transition-[transform,box-shadow] hover:scale-[1.02] hover:shadow-[0_14px_32px_rgba(0,0,0,0.42)] sm:px-10 sm:py-4 sm:text-lg lg:px-12 lg:text-xl"
                 >
                   {project.status}
                 </Link>
@@ -139,10 +139,10 @@ export function ProjectSlide({ project, index }: ProjectSlideProps) {
           {/* Right — glass backdrop with floating screen */}
           <GlassPanel
             variant="warm"
-            className="relative flex min-h-[300px] flex-col rounded-[2.25rem] sm:min-h-0 sm:rounded-[2.5rem]"
+            className="relative flex min-h-[280px] flex-col rounded-[1.5rem] sm:min-h-[360px] sm:rounded-[2rem] lg:min-h-0 lg:rounded-[2.5rem]"
           >
             <div
-              className="flex h-full flex-col items-center justify-center gap-4 px-6 py-10 sm:gap-5 sm:px-10 sm:py-12 lg:px-12 lg:py-14"
+              className="flex h-full flex-col items-center justify-center gap-4 px-4 py-6 sm:gap-5 sm:px-8 sm:py-10 lg:px-12 lg:py-14"
               onMouseEnter={() => {
                 if (window.matchMedia("(hover: hover)").matches) setPaused(true);
               }}

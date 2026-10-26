@@ -38,7 +38,7 @@ export function Work() {
 
       mm.add(
         {
-          isDesktop: "(min-width: 768px)",
+          isDesktop: "(min-width: 1024px)",
           reduceMotion: "(prefers-reduced-motion: reduce)",
         },
         (context) => {
@@ -167,7 +167,7 @@ export function Work() {
               </p>
             </AnimatedContent>
             <AnimatedContent distance={30} duration={0.7}>
-              <h2 className="mx-auto max-w-3xl text-4xl leading-[1.05] font-bold tracking-tight text-foreground sm:text-6xl">
+              <h2 className="mx-auto max-w-3xl text-balance text-3xl leading-[1.1] font-bold tracking-tight text-foreground sm:text-5xl lg:text-6xl">
                 <span className="rounded-full bg-foreground px-5 text-background">
                   {intro.lead}
                 </span>{" "}

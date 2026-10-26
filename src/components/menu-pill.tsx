@@ -114,7 +114,7 @@ export function MenuPill() {
       </AnimatePresence>
 
       <div
-        className="fixed bottom-6 left-1/2 z-[1600] -translate-x-1/2"
+        className="fixed bottom-[max(1.25rem,env(safe-area-inset-bottom))] left-1/2 z-[1600] -translate-x-1/2"
         style={{ perspective: reduceMotion ? undefined : 1200 }}
       >
         <AnimatePresence mode="wait">
@@ -126,8 +126,8 @@ export function MenuPill() {
               animate="visible"
               exit="exit"
               className={cn(
-                "absolute bottom-[calc(100%+2.25rem)] left-1/2 w-[min(45rem,calc(100vw-2rem))] -translate-x-1/2",
-                "overflow-hidden rounded-[4.5rem] border p-6",
+                "absolute bottom-[calc(100%+1.25rem)] left-1/2 max-h-[min(70svh,36rem)] w-[min(45rem,calc(100vw-1.5rem))] -translate-x-1/2 overflow-y-auto",
+                "rounded-[2rem] border p-3 sm:bottom-[calc(100%+2.25rem)] sm:rounded-[3.5rem] sm:p-6 lg:rounded-[4.5rem]",
                 glassVariants.menu,
               )}
             >
@@ -163,7 +163,7 @@ export function MenuPill() {
                         }
                   }
                   whileTap={reduceMotion ? undefined : { scale: 0.97 }}
-                  className="group relative block w-full overflow-hidden rounded-[3rem] px-12 py-9 text-left text-[45px] font-medium leading-none text-foreground"
+                  className="group relative block w-full overflow-hidden rounded-[1.5rem] px-5 py-4 text-left text-[1.75rem] font-medium leading-none text-foreground sm:rounded-[2.5rem] sm:px-8 sm:py-6 sm:text-[2.25rem] lg:rounded-[3rem] lg:px-12 lg:py-9 lg:text-[45px]"
                 >
                   <motion.span
                     aria-hidden

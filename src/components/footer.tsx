@@ -47,20 +47,20 @@ export function Footer() {
   return (
     <footer id="contact" className="px-3 pb-3 sm:px-4 sm:pb-4">
       <div className="relative overflow-hidden rounded-[28px] bg-neutral-950 text-white sm:rounded-[36px]">
-        <div className="px-8 pt-14 sm:px-14 sm:pt-20">
-          <h2 className="max-w-xl text-3xl leading-tight font-semibold tracking-tight sm:text-4xl">
+        <div className="px-6 pt-12 sm:px-14 sm:pt-20">
+          <h2 className="max-w-xl text-balance text-2xl leading-tight font-semibold tracking-tight sm:text-4xl">
             {f.headline}
           </h2>
           <a
             href={f.ctaHref}
-            className="mt-8 inline-flex items-center gap-2 rounded-full bg-white px-6 py-3 text-sm font-medium text-neutral-950 transition-opacity hover:opacity-90"
+            className="relative z-10 mt-8 inline-flex items-center gap-2 rounded-full bg-white px-6 py-3 text-sm font-medium text-neutral-950 transition-opacity hover:opacity-90"
           >
             {f.ctaLabel}
             <span aria-hidden>→</span>
           </a>
         </div>
 
-        <div className="mx-8 mt-14 flex flex-col gap-6 border-t border-white/10 py-8 sm:mx-14 sm:flex-row sm:items-center sm:justify-between">
+        <div className="mx-6 mt-12 flex flex-col gap-6 border-t border-white/10 py-8 sm:mx-14 sm:mt-14 sm:flex-row sm:items-center sm:justify-between">
           <div className="flex gap-3">
             {f.socials.map((s) => (
               <a
@@ -84,7 +84,7 @@ export function Footer() {
         </div>
 
         <div className="overflow-hidden">
-          <p className="translate-y-[18%] text-center text-[22vw] leading-none font-bold tracking-tighter text-white/[0.06] select-none sm:text-[16vw]">
+          <p className="pointer-events-none translate-y-[18%] text-center text-[22vw] leading-none font-bold tracking-tighter text-white/[0.06] select-none sm:text-[16vw]">
             {f.wordmark}
           </p>
         </div>
